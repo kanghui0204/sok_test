@@ -20,6 +20,7 @@
 #include <memory>
 #include <mutex>
 #include <string>
+#include <stdio.h>
 
 #include "embedding_variable.h"
 #include "embeddings/manager.h"

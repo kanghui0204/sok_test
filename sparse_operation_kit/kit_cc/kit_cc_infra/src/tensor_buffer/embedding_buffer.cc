@@ -24,6 +24,7 @@ std::shared_ptr<EmbeddingBuffer> EmbeddingBuffer::create(std::shared_ptr<Tensor>
   auto Deleter = [](EmbeddingBuffer* buf) {
     // SOK do not delete this object, TF will delete it.
   };
+  
   if (tensor)
     return std::shared_ptr<EmbeddingBuffer>(new EmbeddingBuffer(tensor), Deleter);
   else

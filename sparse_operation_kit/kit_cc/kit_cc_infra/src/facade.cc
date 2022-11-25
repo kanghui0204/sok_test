@@ -114,23 +114,33 @@ void Facade::create_variables(
     tensorflow::core::RefCountPtr<tensorflow::EmbeddingVariable>& emb_variable,
     tensorflow::Tensor* emb_tensor) {
   try {
+   
+    printf("SOK debug Facade::create_variables local_replica_id = %ld\n",(long long)local_replica_id);
     std::shared_ptr<ParamInterface> param;
     std::vector<size_t> _shape(shape.size());
-    for (size_t i = 0; i < shape.size(); i++) _shape[i] = static_cast<size_t>(shape[i]);
-
+    for (size_t i = 0; i < shape.size(); i++){
+         printf("SOK debug Facade::create_variables i = %d shape = %ld\n",(int)i,(long long)shape[i]);
+         _shape[i] = static_cast<size_t>(shape[i]);
+    }
+  
+    printf("SOK debug Facade::create_variables before params_mgr_->create_variables\n");
     params_mgr_->create_variables(local_replica_id, translate_initializer(initializer),
                                   use_hashtable, _shape, name, trainable, get_datatype(dtype),
                                   get_datatype(key_dtype), param);
 
+    printf("SOK debug Facade::create_variables before EmbeddingBufferBuilder::create\n");
     auto emb_buffer_builder =
         EmbeddingBufferBuilder::create(param->get_embedding_table_tensor(local_replica_id));
+    printf("SOK debug Facade::create_variables after EmbeddingBufferBuilder::create\n");
     auto buffer = emb_buffer_builder->get_init_buffer();
     const std::vector<tensorflow::int64> temp_shape(shape.begin(), shape.end());
     tensorflow::TensorShape tensor_shape = tensorflow::TensorShape(temp_shape);
     *emb_tensor = tensorflow::Tensor(/*type=*/dtype,
                                      /*shape=*/tensor_shape,
                                      /*buf=*/buffer);
+    printf("SOK debug Facade::create_variables before push_back_embedding_buffer_builder\n");
     params_mgr_->push_back_embedding_buffer_builder(local_replica_id, emb_buffer_builder);
+    printf("SOK debug Facade::create_variables after push_back_embedding_buffer_builder\n");
 
     emb_variable->set_param(param);
 

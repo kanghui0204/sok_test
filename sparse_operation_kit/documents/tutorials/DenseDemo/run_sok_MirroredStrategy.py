@@ -21,7 +21,8 @@ import sys
 
 sys.path.append("../")
 import utility
-from utility import sparse_operation_kit as sok
+#from utility import sparse_operation_kit as sok
+import sparse_operation_kit as sok
 import nvtx
 
 

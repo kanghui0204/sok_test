@@ -160,7 +160,10 @@ class SOKDenseDemo(tf.keras.models.Model):
         self.nnz_per_slot = nnz_per_slot
         self.num_dense_layers = num_dense_layers
         self.embedding_vec_size = embedding_vec_size
-
+        print("SOK debug SOKDenseDemo self.max_vocabulary_size_per_gpu = ",self.max_vocabulary_size_per_gpu)
+        print("SOK debug SOKDenseDemo self.embedding_vec_size = ",self.embedding_vec_size)
+        print("SOK debug SOKDenseDemo self.slot_num = ",self.slot_num)
+        print("SOK debug SOKDenseDemo self.nnz_per_slot = ",self.nnz_per_slot)
         self.embedding_layer = sok.All2AllDenseEmbedding(
             max_vocabulary_size_per_gpu=self.max_vocabulary_size_per_gpu,
             embedding_vec_size=self.embedding_vec_size,

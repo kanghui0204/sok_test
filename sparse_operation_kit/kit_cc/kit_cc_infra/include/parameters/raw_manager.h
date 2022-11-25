@@ -22,6 +22,7 @@
 #include <memory>
 #include <mutex>
 #include <unordered_map>
+#include <stdio.h>
 
 #include "parameters/manager_interface.h"
 #include "parameters/param_interface.h"
